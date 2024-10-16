@@ -5,7 +5,7 @@
 <a href='https://developer.android.com/studio/releases/platforms#5.0'><img src="https://img.shields.io/badge/API%20Level-21+-green.svg"/></a>
 
 
-1. 
+1. Function to Retrieve Greeting Message Based on Time of Day
 ```diff
     private fun getGreetingMessage():Int{
         val c = Calendar.getInstance()
