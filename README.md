@@ -19,12 +19,17 @@
     }
 ```
 
-2. 예전 네이버 지도 SDK는 [appcompat-v7](https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat) 28 버전을 사용합니다.
-   naver-map-compose 1.5.6 버전까지는, `gradle.properties`에 Jetifier 옵션을 추가해줘야 합니다.
-   naver-map-compose 1.5.7 버전부터는 필요하지 않습니다.
-```properties
-android.useAndroidX=true
-android.enableJetifier=true
+2. takeScreenShot View -> Bitmap
+```kotlin
+fun View.takeScreenShot(): Bitmap {
+    val bitmap = Bitmap.createBitmap(
+        this.width,
+        this.height, Bitmap.Config.ARGB_8888
+    )
+    val canvas = Canvas(bitmap)
+    this.draw(canvas)
+    return bitmap
+}
 ```
 
 3. 네이버 지도 SDK는 위치 추적기능을 지원하려고, play-services-location 라이브러리 16.0.0 버전을 사용합니다.
