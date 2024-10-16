@@ -20,6 +20,7 @@
 ```
 
 2. takeScreenShot View -> Bitmap
+
 ```kotlin
 fun View.takeScreenShot(): Bitmap {
     val bitmap = Bitmap.createBitmap(
@@ -31,7 +32,114 @@ fun View.takeScreenShot(): Bitmap {
     return bitmap
 }
 ```
+3.View Extention 
+```kotlin
+fun View.show() {
+    isVisible = true
+}
 
+fun View.hide() {
+    isVisible = false
+}
+
+fun View.hidden() {
+    isInvisible = true
+}
+
+fun ImageView.startRotateAnimation(){
+    val rotate =
+        RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+    rotate.duration = 7000
+    rotate.repeatCount = Animation.INFINITE
+    rotate.interpolator = LinearInterpolator()
+    this.startAnimation(rotate)
+}
+```
+
+4. Dialog Fragment
+```kotlin
+fun DialogFragment.setWidthPercent(percentage: Int) {
+    val percent = percentage.toFloat() / 100
+    val dm = Resources.getSystem().displayMetrics
+    val rect = dm.run { Rect(0, 0, widthPixels, heightPixels) }
+    val percentWidth = rect.width() * percent
+    dialog?.window?.setLayout(percentWidth.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+}
+fun DialogFragment.setFullScreen() {
+    dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+}
+class DialogUnlockTheme : DialogFragment() {
+    private lateinit var binding: DialogUnlockThemeBinding
+
+    private var listener: UnlockThemeDialogListener? = null
+
+    companion object {
+        const val TAG = "DialogPremiumNew"
+
+        fun newInstance(): DialogUnlockTheme {
+            return DialogUnlockTheme()
+        }
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setWidthPercent(90)
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DialogUnlockThemeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView(view)
+        handleEvents(view)
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        if (dialog?.isShowing == true || this.isAdded) return
+        super.show(manager, tag)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        dialog?.window?.setLayout(
+//            WindowManager.LayoutParams.WRAP_CONTENT,
+//            WindowManager.LayoutParams.WRAP_CONTENT
+//        )
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        listener!!.onDismiss()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is UnlockThemeDialogListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement DialogConfirmListener")
+        }
+    }
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+    private fun initView(view: View) {
+
+    }
+interface UnlockThemeDialogListener {
+    fun onWatchAds()
+    fun onGetPremium()
+    fun onDismiss()
+}
+```
 3. 네이버 지도 SDK는 위치 추적기능을 지원하려고, play-services-location 라이브러리 16.0.0 버전을 사용합니다.
    이 버전보다 높은 버전을 사용하고 있으면, 컴파일 혹은 런타임에 오류가 발생할 수 있습니다.
    이 때는 play-services-location 라이브러리 버전과 같은 [naver-map-location](https://github.com/fornewid/naver-map-compose/edit/main/README.md#naver-map-location) 라이브러리를 추가로 선언해야 합니다.
