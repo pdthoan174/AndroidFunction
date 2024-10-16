@@ -6,7 +6,7 @@
 
 
 1. Function to Retrieve Greeting Message Based on Time of Day
-```diff
+```kotlin
     private fun getGreetingMessage():Int{
         val c = Calendar.getInstance()
 
