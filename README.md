@@ -140,15 +140,49 @@ interface UnlockThemeDialogListener {
     fun onDismiss()
 }
 ```
-3. 네이버 지도 SDK는 위치 추적기능을 지원하려고, play-services-location 라이브러리 16.0.0 버전을 사용합니다.
-   이 버전보다 높은 버전을 사용하고 있으면, 컴파일 혹은 런타임에 오류가 발생할 수 있습니다.
-   이 때는 play-services-location 라이브러리 버전과 같은 [naver-map-location](https://github.com/fornewid/naver-map-compose/edit/main/README.md#naver-map-location) 라이브러리를 추가로 선언해야 합니다.
-```diff
-  dependencies {
-      implementation 'io.github.fornewid:naver-map-compose:<version>'
-      implementation 'com.google.android.gms:play-services-location:21.0.1'
-+     implementation 'io.github.fornewid:naver-map-location:21.0.2'
-  }
+3. Crash Detector for Android
+[Article]([https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/fornewid/naver-map-compose/](https://medium.com/@sandeepkella23/crash-detector-for-android-41b55868d230))
+`SplashActivity.kt`
+```kotlin
+  override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
+        if (intent.hasExtra("crash")) {
+            // Handle any state restoration if necessary
+            textSubtitle.text = "App has recovered from a crash"
+        }
+    }
+```
+
+`MyApplication : Application()`
+```kotlin
+  override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler(this))
+    }
+```
+
+`CustomExceptionHandler`
+```kotlin
+class CustomExceptionHandler(context: Context) : Thread.UncaughtExceptionHandler {
+    private val defaultHandler: Thread.UncaughtExceptionHandler? =
+        Thread.getDefaultUncaughtExceptionHandler()
+    private val context: Context = context
+
+    override fun uncaughtException(thread: Thread, throwable: Throwable) {
+        // Log the exception or send it to a server
+        restartApp()
+        defaultHandler?.uncaughtException(thread, throwable) // Optional: Call the default handler
+    }
+
+    private fun restartApp() {
+        val intent: Intent = Intent(context, SplashScreenActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.putExtra("crash","crash")
+        context.startActivity(intent)
+        Runtime.getRuntime().exit(0) // Close the current process
+    }
+}
 ```
 
 ## Usage
