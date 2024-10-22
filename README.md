@@ -141,7 +141,7 @@ interface UnlockThemeDialogListener {
 }
 ```
 3. Crash Detector for Android
-[Article]([https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/fornewid/naver-map-compose/](https://medium.com/@sandeepkella23/crash-detector-for-android-41b55868d230))
+4. [Article]([https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/fornewid/naver-map-compose/](https://medium.com/@sandeepkella23/crash-detector-for-android-41b55868d230))
 `SplashActivity.kt`
 ```kotlin
   override fun onCreate(savedInstanceState: Bundle?) {
