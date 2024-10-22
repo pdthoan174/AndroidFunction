@@ -141,8 +141,10 @@ interface UnlockThemeDialogListener {
 }
 ```
 3. Crash Detector for Android
-   [Article]((https://medium.com/@sandeepkella23/crash-detector-for-android-41b55868d230))
-   Xác định lớp Ứng dụng tùy chỉnh trong tệp kê khai: Thêm lớp Ứng dụng tùy chỉnh vào tệp AndroidManifest.xml của bạn bằng cách sử dụng thuộc tính android:name trong phần tử <application> . Điều này thông báo cho hệ thống Android sử dụng lớp tùy chỉnh của bạn để quản lý trạng thái toàn cầu của ứng dụng. ```xml <ứng dụng android:name=".MyApplication" ...> ... </application> ```
+[Article](https://medium.com/@sandeepkella23/crash-detector-for-android-41b55868d230)
+   
+Xác định lớp Ứng dụng tùy chỉnh trong tệp kê khai: Thêm lớp Ứng dụng tùy chỉnh vào tệp AndroidManifest.xml của bạn bằng cách sử dụng thuộc tính android:name trong phần tử <application> . Điều này thông báo cho hệ thống Android sử dụng lớp tùy chỉnh của bạn để quản lý trạng thái toàn cầu của ứng dụng. ```xml <ứng dụng android:name=".MyApplication" ...> ... </application> ```
+
 `SplashActivity.kt`
 ```kotlin
   override fun onCreate(savedInstanceState: Bundle?) {
