@@ -188,15 +188,11 @@ class CustomExceptionHandler(context: Context) : Thread.UncaughtExceptionHandler
 }
 ```
 
-## Usage
+4. Thư viện BlurView
 
-### 지도 추가하기
+### GaussianBlur
+([https://github.com/jrvansuita/GaussianBlur](https://github.com/jrvansuita/GaussianBlur)
 
-```kotlin
-NaverMap(
-    modifier = Modifier.fillMaxSize()
-)
-```
 
 ### 지도 구성하기
 
